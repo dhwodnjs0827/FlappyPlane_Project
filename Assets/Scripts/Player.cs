@@ -16,8 +16,12 @@ public class Player : MonoBehaviour
 
     public bool godMode = false;
 
+    GameManager gameManager;
+
     private void Start()
     {
+        gameManager = GameManager.Instance;
+
         animator = GetComponentInChildren<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
 
@@ -38,6 +42,10 @@ public class Player : MonoBehaviour
             if (deathCooldown <= 0f)
             {
                 // 게임 재시작
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+                {
+                    gameManager.RestartGame();
+                }
             }
             else
             {
@@ -91,5 +99,6 @@ public class Player : MonoBehaviour
         deathCooldown = 1f;
 
         animator.SetInteger("IsDie", 1);
+        gameManager.GameOver();
     }
 }
